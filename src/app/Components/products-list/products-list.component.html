@@ -1,0 +1,81 @@
+<!-- <h1>Product Name: {{product1.name}}</h1>
+<h2>Price: {{product1.price}}</h2> -->
+
+<!-- <h1>First Product</h1>
+<h2>Name: {{productsList[0].name}}</h2>
+<h2>Name: {{productsList[1].name}}</h2> -->
+
+
+<!-- @for(i of arrayName){htmlElement } -->
+<!-- for of  -->
+
+<button class="btn btn-primary mb-2" (click)="toggleImg()">{{showOrhideImg?'Hide':'Show'}} Image</button>
+<!-- Day3 => date pipe -->
+<h3>{{date1|date:'fullDate'}}</h3>
+
+<!-- ########################### -->
+<!-- <input type="text" name="user" id="user" [value]="userName"> -->
+<!-- <input type="text" name="user" id="user" [(ngModel)]="userName">
+<h4>{{userName}}</h4> -->
+<!-- <div class="row mb-3">
+  <label for="filter" class="form-label">Filter By Name:</label>
+  <input type="text" name="filter" id="filter" [(ngModel)]="filterByName" class="form-control">
+</div> -->
+
+<div class="row ">
+  <!-- @for(product of productsList;track product.id){ -->
+  @for(product of ProductsAfetrFilter;track product.id){
+  <!-- <h1>{{product.name}}</h1>
+  <h2>{{product.price}}</h2> -->
+  <!--Day3: class binding -->
+  <!-- <div class="col-md-4 mb-3" [class.class1]="product.price<10000" [class.text-danger]="product.price>10000"> -->
+
+  <!--Day3: Style Binding => ternary operator -->
+  <!-- <div class="col-md-4 mb-3" [style.background-color]="(product.price>20000)?'lightgreen':'grey'" [style.color]="(product.quantity==0)?'red':'green'"> -->
+
+    <!-- attribute directive => ngClass , ngStyle -->
+  <!-- <div class="col-md-4 mb-3" [ngClass]="{'class1':product.quantity>0,'bg-success':product.price>10000}"> -->
+    <!-- <div class="col-md-4 mb-3" [ngStyle]="{'color':(product.quantity==0)?'red':'green','background-color':(product.quantity>0)?'lightblue':'lightgrey'}"> -->
+      <div class="col-md-4 mb-3">
+
+    <!-- <img src="{{product.PrdimgURL}}" class="img-fluid"> -->
+
+    <!-- @if(condition){} => true (show in dom) , false (hide in dom) -->
+    @if(showOrhideImg){
+    <img [src]="product.PrdimgURL" class="img-fluid" ImgStyle="25px" radius2="10px" >
+    }
+    <h3>{{product.name|uppercase}}</h3>
+    <!-- <h3>{{product.price|currency:'USD':'symbol'}}</h3> -->
+    <h3 class="text-decoration-line-through text-muted">{{product.price|currency}}</h3>
+    <h3>{{product.price|calcDiscount:50|currency}}</h3>
+
+    <h4 class="text-primary">
+      @switch (product.categoryID) {
+      @case (1) {Tables}
+      @case (2) {Chairs}
+      @default {TV Unit}
+      }
+    </h4>
+
+    @if(product.quantity==0){
+    <p class="text-danger">Out Of Stock</p>
+    }
+    @else if (product.quantity==1) {
+    <p>Last one item</p>
+    }
+    @else if (product.quantity==2) {
+    <p>Last two item</p>
+    }
+    @else {
+    <p>In stock {{product.quantity}}</p>
+    }
+    <!-- <button class="btn btn-danger" [hidden]="product.quantity==0">Add To Cart <i class="fa-sharp fa-solid fa-cart-plus modifyIcon"></i></button> -->
+    <button class="btn btn-danger" [disabled]="product.quantity==0">Add To Cart <i
+        class="fa-sharp fa-solid fa-cart-plus modifyIcon"></i></button>
+  </div>
+
+  }
+  @empty {
+    <h1 class="text-danger">No Product Available</h1>
+  }
+</div>
