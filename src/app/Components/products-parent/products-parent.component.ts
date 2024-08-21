@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductsListComponent } from '../products-list/products-list.component';
 import { FormsModule } from '@angular/forms';
+import { Iproduct } from '../../Models/iproduct';
 
 @Component({
   selector: 'app-products-parent',
@@ -11,4 +12,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductsParentComponent {
   filterByName:string='';
+
+  productsInCart:Iproduct[] =[];
+  cart(newPrd:Iproduct){
+
+    this.productsInCart.push(newPrd);
+  }
 }

@@ -33,16 +33,17 @@
   <!--Day3: Style Binding => ternary operator -->
   <!-- <div class="col-md-4 mb-3" [style.background-color]="(product.price>20000)?'lightgreen':'grey'" [style.color]="(product.quantity==0)?'red':'green'"> -->
 
-    <!-- attribute directive => ngClass , ngStyle -->
+  <!-- attribute directive => ngClass , ngStyle -->
   <!-- <div class="col-md-4 mb-3" [ngClass]="{'class1':product.quantity>0,'bg-success':product.price>10000}"> -->
-    <!-- <div class="col-md-4 mb-3" [ngStyle]="{'color':(product.quantity==0)?'red':'green','background-color':(product.quantity>0)?'lightblue':'lightgrey'}"> -->
-      <div class="col-md-4 mb-3">
+  <!-- <div class="col-md-4 mb-3" [ngStyle]="{'color':(product.quantity==0)?'red':'green','background-color':(product.quantity>0)?'lightblue':'lightgrey'}"> -->
+  <!-- <div class="col-md-4 mb-3" (click)="goDetails(product.id)"> -->
+    <div class="col-md-4 mb-3" [routerLink]="['/PrdDetails',product.id]">
 
     <!-- <img src="{{product.PrdimgURL}}" class="img-fluid"> -->
 
     <!-- @if(condition){} => true (show in dom) , false (hide in dom) -->
     @if(showOrhideImg){
-    <img [src]="product.PrdimgURL" class="img-fluid" ImgStyle="25px" radius2="10px" >
+    <img [src]="product.PrdimgURL" class="img-fluid" ImgStyle="25px" radius2="10px">
     }
     <h3>{{product.name|uppercase}}</h3>
     <!-- <h3>{{product.price|currency:'USD':'symbol'}}</h3> -->
@@ -70,12 +71,14 @@
     <p>In stock {{product.quantity}}</p>
     }
     <!-- <button class="btn btn-danger" [hidden]="product.quantity==0">Add To Cart <i class="fa-sharp fa-solid fa-cart-plus modifyIcon"></i></button> -->
-    <button class="btn btn-danger" [disabled]="product.quantity==0">Add To Cart <i
+
+    <!-- Day4 => add to cart -->
+    <button class="btn btn-danger" [disabled]="product.quantity==0" (click)="addToCart(product)">Add To Cart <i
         class="fa-sharp fa-solid fa-cart-plus modifyIcon"></i></button>
   </div>
 
   }
   @empty {
-    <h1 class="text-danger">No Product Available</h1>
+  <h1 class="text-danger">No Product Available</h1>
   }
 </div>
