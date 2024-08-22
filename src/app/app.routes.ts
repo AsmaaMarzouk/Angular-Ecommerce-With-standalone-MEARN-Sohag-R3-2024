@@ -4,6 +4,7 @@ import { ProductsListComponent } from './Components/products-list/products-list.
 import { ProductsParentComponent } from './Components/products-parent/products-parent.component';
 import { NotFoundPageComponent } from './Components/not-found-page/not-found-page.component';
 import { ProductsDetailsComponent } from './Components/products-details/products-details.component';
+import { ObsAndOperatorsComponent } from './Components/obs-and-operators/obs-and-operators.component';
 
 export const routes: Routes = [
   // default Path
@@ -21,6 +22,11 @@ export const routes: Routes = [
     title: 'Products parent page',
   },
   {path:'PrdDetails/:ProductID',component:ProductsDetailsComponent,title:"Product details page"},
+  {
+    path: 'ObsAndOperators',
+    component: ObsAndOperatorsComponent,
+    title: 'Oserverable page',
+  },
   // not found page 404 //wildcard path
   { path: '**', component: NotFoundPageComponent, title: 'Not found page' },
 ];

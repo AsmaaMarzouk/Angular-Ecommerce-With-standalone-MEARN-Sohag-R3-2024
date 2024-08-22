@@ -125,4 +125,9 @@ export class ProductsService {
     return this.productsList.find(prd=>prd.id==prdid);
 
   }
+
+  // Day5
+  getAllPrdIDs():number[]{
+    return this.productsList.map(prd=>prd.id);
+  }
 }
