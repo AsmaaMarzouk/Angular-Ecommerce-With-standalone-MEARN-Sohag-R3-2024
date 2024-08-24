@@ -5,6 +5,7 @@ import { ProductsParentComponent } from './Components/products-parent/products-p
 import { NotFoundPageComponent } from './Components/not-found-page/not-found-page.component';
 import { ProductsDetailsComponent } from './Components/products-details/products-details.component';
 import { ObsAndOperatorsComponent } from './Components/obs-and-operators/obs-and-operators.component';
+import { UserTemplateFormComponent } from './Components/User/user-template-form/user-template-form.component';
 
 export const routes: Routes = [
   // default Path
@@ -27,6 +28,13 @@ export const routes: Routes = [
     component: ObsAndOperatorsComponent,
     title: 'Oserverable page',
   },
+  {
+    path: 'UserTemplate',
+    component: UserTemplateFormComponent,
+    title: 'User template page',
+  },
+  // {path:"addProducts",component: EditOrAddProductsComponent}
+  // {path:"editProducts/:ProductID",component: EditOrAddProductsComponent}
   // not found page 404 //wildcard path
   { path: '**', component: NotFoundPageComponent, title: 'Not found page' },
 ];

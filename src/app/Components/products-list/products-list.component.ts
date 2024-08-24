@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { Iproduct } from '../../Models/iproduct';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,15 +12,23 @@ import { ImgStyleDirective } from '../../Directives/img-style.directive';
 import { CalcDiscountPipe } from '../../Pipes/calc-discount.pipe';
 import { ProductsService } from '../../Services/products.service';
 import { Router, RouterModule } from '@angular/router';
+import { ProductsWithApiService } from '../../Services/products-with-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, ImgStyleDirective, CalcDiscountPipe,RouterModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ImgStyleDirective,
+    CalcDiscountPipe,
+    RouterModule,
+  ],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
-export class ProductsListComponent {
+export class ProductsListComponent implements OnDestroy {
   showOrhideImg: boolean = true;
   userName: string = 'Mahmoud';
   // product1: Iproduct = {
@@ -40,12 +54,19 @@ export class ProductsListComponent {
 
   // create event
   @Output() newPrdInCart: EventEmitter<Iproduct> = new EventEmitter<Iproduct>();
+
+  // Day6
+  sub!: Subscription;
   // #######################################
 
   // ############
   // 1-intialize 2-inject
   // Day4
-  constructor(private productservice: ProductsService,private router:Router) {
+  constructor(
+    private productservice: ProductsService,
+    private router: Router,
+    private productsWithAPI: ProductsWithApiService
+  ) {
     // initialize products
     // this.productsList = [
     //   {
@@ -142,13 +163,30 @@ export class ProductsListComponent {
     // this.ProductsAfetrFilter=this.productsList;
     // console.log("hello constructor");
   }
+
   ngOnInit(): void {
     // console.log("hello oninit");
 
     // this.ProductsAfetrFilter=Array.from(this.productsList);
     // this.ProductsAfetrFilter = this.productsList;
     // Day4
-    this.ProductsAfetrFilter = this.productservice.getAllProducts();
+    // this.ProductsAfetrFilter = this.productservice.getAllProducts();
+
+    // Day6
+
+    // this.productsWithAPI.getAllProducts().subscribe({
+    //   next: (allPrds) => {
+    //     // console.log(allPrds);
+    //     this.ProductsAfetrFilter=allPrds;
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
+
+    this.sub = this.productsWithAPI.getAllProducts().subscribe((data) => {
+      this.ProductsAfetrFilter = data;
+    });
     // #############
   }
   toggleImg() {
@@ -167,7 +205,17 @@ export class ProductsListComponent {
     // this.ProductsAfetrFilter = this.performFilter(value);
 
     // Day4
-    this.ProductsAfetrFilter = this.productservice.performFilter(value);
+    // this.ProductsAfetrFilter = this.productservice.performFilter(value);
+
+    // Day6
+
+    this.productsWithAPI.getAllProducts().subscribe((data) => {
+      this.ProductsAfetrFilter = data.filter((prd) =>
+        prd.name.toLowerCase().includes(value.toLowerCase())
+      );
+    });
+
+    // ####################################
   }
 
   // ############################################
@@ -186,7 +234,11 @@ export class ProductsListComponent {
 
   goDetails(prdID: number) {
     // navigate
-    this.router.navigate(['/PrdDetails',prdID]);
+    this.router.navigate(['/PrdDetails', prdID]);
   }
   // #################
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 }
