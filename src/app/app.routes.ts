@@ -6,6 +6,9 @@ import { NotFoundPageComponent } from './Components/not-found-page/not-found-pag
 import { ProductsDetailsComponent } from './Components/products-details/products-details.component';
 import { ObsAndOperatorsComponent } from './Components/obs-and-operators/obs-and-operators.component';
 import { UserTemplateFormComponent } from './Components/User/user-template-form/user-template-form.component';
+import { UserAuthenComponent } from './Components/user-authen/user-authen.component';
+import { userGuard } from './Guards/user.guard';
+import { UserReactiveFormComponent } from './Components/User/user-reactive-form/user-reactive-form.component';
 
 export const routes: Routes = [
   // default Path
@@ -21,6 +24,7 @@ export const routes: Routes = [
     path: 'ProductsParent',
     component: ProductsParentComponent,
     title: 'Products parent page',
+    canActivate:[userGuard]
   },
   {path:'PrdDetails/:ProductID',component:ProductsDetailsComponent,title:"Product details page"},
   {
@@ -32,6 +36,21 @@ export const routes: Routes = [
     path: 'UserTemplate',
     component: UserTemplateFormComponent,
     title: 'User template page',
+  },
+  {
+    path: 'UserLogin',
+    component: UserAuthenComponent,
+    title: 'User Login',
+  },
+  {
+    path: 'UserLogout',
+    component: UserAuthenComponent,
+    title: 'User Logout',
+  },
+  {
+    path: 'UserReactive',
+    component: UserReactiveFormComponent,
+    title: 'User Reactive',
   },
   // {path:"addProducts",component: EditOrAddProductsComponent}
   // {path:"editProducts/:ProductID",component: EditOrAddProductsComponent}
